@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Search</title>
+    <link rel="stylesheet" href="./Bai1.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
+</head>
+<body>
+    <header>
+
+        <div class="name">
+            <i class="fas fa-cutlery"></i>
+            Cheffy
+        </div>
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="What would you like to?" />
+          </div>
+        <nav>
+            <a href="#">What to cook</a>
+            <a href="#">Recipes</a>
+            <a href="#">Ingredients</a>
+            <a href="#">Occasions</a>
+            <a href="#">About Us</a>
+        </nav>
+        <button class="recipe-box">Your Recipe Box</button>
+    </header>
+    
+    <main>
+        <aside class="filters">
+            <h3>Filters</h3>
+            <div class="filter-group">
+                <h4>Type</h4>
+                <label><input type="checkbox"> Pan-fried</label>
+                <label><input type="checkbox"> Stir-fried</label>
+                <label><input type="checkbox" checked> Grilled</label>
+                <label><input type="checkbox" checked> Roasted</label>
+            </div>
+            <div class="filter-group">
+                <h4>Time</h4>
+                <input type="range" min="30" max="50">
+            </div>
+            <div class="filter-group">
+                <h4>Rating</h4>
+                <label><input type="checkbox"> ⭐⭐⭐⭐⭐</label>
+                <label><input type="checkbox" checked> ⭐⭐⭐⭐</label>
+                <label><input type="checkbox" checked> ⭐⭐⭐</label>
+            </div>
+            <button class="apply">Apply</button>
+        </aside>
+        
+        <section class="no-results">
+            <h2>Sorry, no results were found for "cakescascsa"</h2>
+           <img src="./img/Image 105.png" alt="" style="height: 300px; width: 300px;">
+            <p>We have all your Independence Day sweets covered.</p>
+            <div class="tags">
+                <button class="sweet">Sweet Cake</button>
+                <button class="black">Black Cake</button>
+                <button class="verde">Pozole Verde</button>
+                <button class="heathy">Healthy food</button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

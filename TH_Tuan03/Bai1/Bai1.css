@@ -1,0 +1,170 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f8f8;
+}
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.name {
+    padding: 5px 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff4081;
+}
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+}
+.recipe-box {
+    background-color: #ff4081;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .search-container input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border: none;
+    border-radius: 25px;
+    background-color: #eee;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  .search-container input:focus {
+    background-color: #ddd;
+  }
+  
+  .search-container i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 16px;
+  }
+main {
+    display: flex;
+    width: 80%;
+    margin-top: 20px;
+}
+.filters {
+    width: 25%;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+.no-results {
+    flex-grow: 1;
+    text-align: center;
+    background: white;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+}
+.tags span {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px 12px;
+    background: #eee;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.filter-group{
+    display: flex;
+    flex-direction: column;
+
+}
+.sweet{
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    border-color: pink;
+    width: 150px;
+    padding: 10px;
+    height: 40px;
+    color: rgb(202, 66, 66) !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: pink;
+}
+.sweet:hover {
+    background-color: pink;
+    color: white;
+}
+.black{
+    background-color: rgb(19, 19, 19);
+    border-radius: 10px;
+    width: 150px;
+    padding: 10px;
+    height: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(246, 242, 242);
+}
+.black:hover {
+    background-color: black;
+    color: white;
+}
+.verde{
+    background-color: rgb(225, 230, 118);
+    border-radius: 10px;
+    width: 150px;
+    padding: 10px;
+    height: 40px;
+    border-color: yellow;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(108, 108, 12);
+}
+.verde:hover {
+    background-color: yellow;
+    color: black;
+}
+.heathy{
+    background-color: rgb(115, 216, 105);
+    border-radius: 10px;
+    width: 150px;
+    padding: 10px;
+    height: 40px;
+    border-color: green;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(7, 88, 7);
+}
+.heathy:hover {
+    background-color: green;
+    color: white;
+}
+.apply{
+    background-color: #ff4081;
+    color: pink;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    width: 200px;
+    height: 40px;
+}
+.apply:hover {
+    background-color: pink;
+    color: #ff4081;
+}
