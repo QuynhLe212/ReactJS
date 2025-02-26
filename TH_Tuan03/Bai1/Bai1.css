@@ -96,7 +96,7 @@ main {
 .filter-group{
     display: flex;
     flex-direction: column;
-
+    
 }
 .sweet{
     background-color: rgb(255, 255, 255);
