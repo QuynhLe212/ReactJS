@@ -53,7 +53,7 @@ function App() {
         <h1 className="recipe-box-title">Emma Gonzalez's Recipe Box</h1>
         <div className="recipe-box-info">
           <img
-            src="https://via.placeholder.com/100" // Replace with Emma's actual image or use a placeholder
+            src="womenFace.jpg" // Replace with Emma's actual image or use a placeholder
             alt="Emma Gonzalez"
             className="profile-img"
           />
