@@ -5,13 +5,19 @@ import axios from 'axios';
 
 const DetailedReport = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get('http://localhost:3001/detailedReport');
         setData(response.data);
+        setLoading(false);
       } catch (error) {
+        setError('Lỗi khi lấy dữ liệu. Vui lòng thử lại sau.');
+        setLoading(false);
         console.error('Lỗi khi lấy dữ liệu Detailed Report:', error);
       }
     };
@@ -81,30 +87,39 @@ const DetailedReport = () => {
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">BÁO CÁO CHI TIẾT</h2>
         <div className="flex space-x-2">
-          <button className="bg-pink-500 text-white px-4 py-2 rounded">IMPORT</button>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded">EXPORT</button>
+          <button className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition-colors">
+            IMPORT
+          </button>
+          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+            EXPORT
+          </button>
         </div>
       </div>
 
-      <DataTable
-        columns={columns}
-        data={data}
-        pagination
-        paginationPerPage={5}
-        paginationRowsPerPageOptions={[5, 10, 15]}
-        highlightOnHover
-        customStyles={{
-          headCells: {
-            style: {
-              backgroundColor: '#f1f5f9',
-              fontWeight: 'bold',
+      {loading ? (
+        <div className="text-center text-gray-600">Đang tải dữ liệu...</div>
+      ) : error ? (
+        <div className="text-center text-red-600">{error}</div>
+      ) : (
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination
+          paginationPerPage={5}
+          paginationRowsPerPageOptions={[5, 10, 15]}
+          highlightOnHover
+          customStyles={{
+            headCells: {
+              style: {
+                backgroundColor: '#f1f5f9',
+                fontWeight: 'bold',
+              },
             },
-          },
-        }}
-      />
+          }}
+        />
+      )}
     </div>
   );
 };
 
 export default DetailedReport;
-
