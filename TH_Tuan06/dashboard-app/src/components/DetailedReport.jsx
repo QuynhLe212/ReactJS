@@ -2,11 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import axios from 'axios';
+import { FaEdit } from 'react-icons/fa';
 
 const DetailedReport = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    value: '',
+    date: '',
+    status: '',
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,18 +34,68 @@ const DetailedReport = () => {
     fetchData();
   }, []);
 
+  const handleEditClick = (row) => {
+    // Chuyển định dạng ngày từ DD/MM/YYYY sang YYYY-MM-DD để dùng với input type="date"
+    const [day, month, year] = row.date.split('/');
+    const formattedDate = `${year}-${month}-${day}`;
+    
+    setSelectedRow(row);
+    setFormData({
+      name: row.name,
+      company: row.company,
+      value: row.value,
+      date: formattedDate, // Định dạng YYYY-MM-DD
+      status: row.status,
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedRow(null);
+    setFormData({
+      name: '',
+      company: '',
+      value: '',
+      date: '',
+      status: '',
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = () => {
+    // Chuyển định dạng ngày từ YYYY-MM-DD về DD/MM/YYYY để lưu vào data
+    const [year, month, day] = formData.date.split('-');
+    const formattedDate = `${day}/${month}/${year}`;
+
+    const updatedData = data.map((item) =>
+      item.id === selectedRow.id
+        ? { ...item, ...formData, date: formattedDate }
+        : item
+    );
+    setData(updatedData);
+    handleModalClose();
+  };
+
   const columns = [
     {
       name: '',
-      selector: row => row.id,
+      selector: (row) => row.id,
       cell: () => <input type="checkbox" />,
       width: '50px',
     },
     {
       name: 'TÊN KHÁCH HÀNG',
-      selector: row => row.name,
+      selector: (row) => row.name,
       sortable: true,
-      cell: row => (
+      cell: (row) => (
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
           <span>{row.name}</span>
@@ -44,24 +104,24 @@ const DetailedReport = () => {
     },
     {
       name: 'CÔNG TY',
-      selector: row => row.company,
+      selector: (row) => row.company,
       sortable: true,
     },
     {
       name: 'GIÁ TRỊ ĐƠN HÀNG',
-      selector: row => row.value,
+      selector: (row) => row.value,
       sortable: true,
-      cell: row => `$${row.value}`,
+      cell: (row) => `$${row.value}`,
     },
     {
       name: 'NGÀY ĐẶT HÀNG',
-      selector: row => row.date,
+      selector: (row) => row.date,
       sortable: true,
     },
     {
       name: 'TRẠNG THÁI',
-      selector: row => row.status,
-      cell: row => (
+      selector: (row) => row.status,
+      cell: (row) => (
         <span
           className={`px-2 py-1 rounded ${
             row.status === 'New'
@@ -77,7 +137,11 @@ const DetailedReport = () => {
     },
     {
       name: '',
-      cell: () => <span>✏️</span>,
+      cell: (row) => (
+        <button onClick={() => handleEditClick(row)} className="text-gray-600 hover:text-gray-800">
+          <FaEdit />
+        </button>
+      ),
       width: '50px',
     },
   ];
@@ -117,6 +181,84 @@ const DetailedReport = () => {
             },
           }}
         />
+      )}
+
+      {/* Modal chỉnh sửa */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md transform transition-transform duration-300 scale-95">
+            <h3 className="text-lg font-bold mb-4">Chỉnh sửa thông tin</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Tên khách hàng</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Công ty</label>
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Giá trị đơn hàng</label>
+                <input
+                  type="number"
+                  name="value"
+                  value={formData.value}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Ngày đặt hàng</label>
+                <input
+                  type="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Trạng thái</label>
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                >
+                  <option value="New">Mới</option>
+                  <option value="In-progress">Đang xử lý</option>
+                  <option value="Completed">Hoàn thành</option>
+                </select>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end space-x-2">
+              <button
+                onClick={handleModalClose}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition-colors"
+              >
+                Hủy
+              </button>
+              <button
+                onClick={handleSave}
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+              >
+                Lưu
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
