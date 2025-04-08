@@ -1,6 +1,6 @@
 // src/components/Sidebar.jsx
 import React from "react";
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import teamCollaboration from "../assets/team-collaboration.jpg";
 
 const Sidebar = () => {
@@ -13,30 +13,84 @@ const Sidebar = () => {
 
       {/* Các nút điều hướng */}
       <div className="flex flex-col space-y-4 p-4">
-        <Link to="/" className="flex items-center space-x-2 bg-pink-500 text-white p-2 rounded hover:bg-pink-600 transition-colors">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `flex items-center space-x-2 p-2 rounded transition-all duration-300 ${
+              isActive
+                ? 'bg-blue-500 text-white scale-105 border-l-4 border-blue-700'
+                : 'text-gray-500 hover:text-gray-700'
+            }`
+          }
+        >
           <span>📊</span>
           <span>Dashboard</span>
-        </Link>
-        <Link to="/projects" className="flex items-center space-x-2 text-gray-500 p-2 hover:text-gray-700 transition-colors">
+        </NavLink>
+        <NavLink
+          to="/projects"
+          className={({ isActive }) =>
+            `flex items-center space-x-2 p-2 rounded transition-all duration-300 ${
+              isActive
+                ? 'bg-blue-500 text-white scale-105 border-l-4 border-blue-700'
+                : 'text-gray-500 hover:text-gray-700'
+            }`
+          }
+        >
           <span>📁</span>
           <span>Dự án</span>
-        </Link>
-        <Link to="/teams" className="flex items-center space-x-2 text-gray-500 p-2 hover:text-gray-700 transition-colors">
+        </NavLink>
+        <NavLink
+          to="/teams"
+          className={({ isActive }) =>
+            `flex items-center space-x-2 p-2 rounded transition-all duration-300 ${
+              isActive
+                ? 'bg-blue-500 text-white scale-105 border-l-4 border-blue-700'
+                : 'text-gray-500 hover:text-gray-700'
+            }`
+          }
+        >
           <span>👥</span>
           <span>Đội nhóm</span>
-        </Link>
-        <Link to="/analytics" className="flex items-center space-x-2 text-gray-500 p-2 hover:text-gray-700 transition-colors">
+        </NavLink>
+        <NavLink
+          to="/analytics"
+          className={({ isActive }) =>
+            `flex items-center space-x-2 p-2 rounded transition-all duration-300 ${
+              isActive
+                ? 'bg-blue-500 text-white scale-105 border-l-4 border-blue-700'
+                : 'text-gray-500 hover:text-gray-700'
+            }`
+          }
+        >
           <span>📈</span>
           <span>Phân tích</span>
-        </Link>
-        <Link to="/messages" className="flex items-center space-x-2 text-gray-500 p-2 hover:text-gray-700 transition-colors">
+        </NavLink>
+        <NavLink
+          to="/messages"
+          className={({ isActive }) =>
+            `flex items-center space-x-2 p-2 rounded transition-all duration-300 ${
+              isActive
+                ? 'bg-blue-500 text-white scale-105 border-l-4 border-blue-700'
+                : 'text-gray-500 hover:text-gray-700'
+            }`
+          }
+        >
           <span>💬</span>
           <span>Tin nhắn</span>
-        </Link>
-        <Link to="/integrations" className="flex items-center space-x-2 text-gray-500 p-2 hover:text-gray-700 transition-colors">
+        </NavLink>
+        <NavLink
+          to="/integrations"
+          className={({ isActive }) =>
+            `flex items-center space-x-2 p-2 rounded transition-all duration-300 ${
+              isActive
+                ? 'bg-blue-500 text-white scale-105 border-l-4 border-blue-700'
+                : 'text-gray-500 hover:text-gray-700'
+            }`
+          }
+        >
           <span>🔗</span>
           <span>Tích hợp</span>
-        </Link>
+        </NavLink>
       </div>
 
       {/* Phần V2.0 với hình ảnh */}
