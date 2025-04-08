@@ -8,7 +8,8 @@ const DetailedReport = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -53,15 +54,28 @@ const DetailedReport = () => {
         date: formattedDate,
         status: rowData.status,
       });
-      setIsModalOpen(true);
+      setIsEditModalOpen(true);
     } catch (error) {
       console.error('Lỗi khi lấy dữ liệu chi tiết:', error);
       alert('Không thể lấy dữ liệu chi tiết. Vui lòng thử lại.');
     }
   };
 
+  // Xử lý khi nhấn nút "Thêm người dùng"
+  const handleAddClick = () => {
+    setFormData({
+      name: '',
+      company: '',
+      value: '',
+      date: '',
+      status: 'New',
+    });
+    setIsAddModalOpen(true);
+  };
+
   const handleModalClose = () => {
-    setIsModalOpen(false);
+    setIsEditModalOpen(false);
+    setIsAddModalOpen(false);
     setSelectedRow(null);
     setFormData({
       name: '',
@@ -80,9 +94,15 @@ const DetailedReport = () => {
     }));
   };
 
-  // Xử lý khi nhấn "Lưu": Gọi API PUT để cập nhật dữ liệu
-  const handleSave = async () => {
+  // Xử lý khi nhấn "Lưu" trong modal chỉnh sửa: Gọi API PUT để cập nhật dữ liệu
+  const handleEditSave = async () => {
     try {
+      // Kiểm tra dữ liệu đầu vào
+      if (!formData.name || !formData.company || !formData.value || !formData.date || !formData.status) {
+        alert('Vui lòng điền đầy đủ thông tin.');
+        return;
+      }
+
       // Chuyển định dạng ngày từ YYYY-MM-DD về DD/MM/YYYY để lưu vào API
       const [year, month, day] = formData.date.split('-');
       const formattedDate = `${day}/${month}/${year}`;
@@ -91,7 +111,7 @@ const DetailedReport = () => {
         ...selectedRow,
         name: formData.name,
         company: formData.company,
-        value: parseInt(formData.value), // Đảm bảo giá trị là số
+        value: parseInt(formData.value),
         date: formattedDate,
         status: formData.status,
       };
@@ -109,6 +129,40 @@ const DetailedReport = () => {
     } catch (error) {
       console.error('Lỗi khi cập nhật dữ liệu:', error);
       alert('Không thể cập nhật dữ liệu. Vui lòng thử lại.');
+    }
+  };
+
+  // Xử lý khi nhấn "Lưu" trong modal thêm người dùng: Gọi API POST để thêm dữ liệu
+  const handleAddSave = async () => {
+    try {
+      // Kiểm tra dữ liệu đầu vào
+      if (!formData.name || !formData.company || !formData.value || !formData.date || !formData.status) {
+        alert('Vui lòng điền đầy đủ thông tin.');
+        return;
+      }
+
+      // Chuyển định dạng ngày từ YYYY-MM-DD về DD/MM/YYYY để lưu vào API
+      const [year, month, day] = formData.date.split('-');
+      const formattedDate = `${day}/${month}/${year}`;
+
+      const newRow = {
+        name: formData.name,
+        company: formData.company,
+        value: parseInt(formData.value),
+        date: formattedDate,
+        status: formData.status,
+      };
+
+      // Gửi yêu cầu POST để thêm dữ liệu mới lên server
+      const response = await axios.post('http://localhost:3001/detailedReport', newRow);
+
+      // Cập nhật dữ liệu trong state để bảng hiển thị ngay lập tức
+      setData([...data, response.data]);
+
+      handleModalClose();
+    } catch (error) {
+      console.error('Lỗi khi thêm dữ liệu:', error);
+      alert('Không thể thêm dữ liệu. Vui lòng thử lại.');
     }
   };
 
@@ -179,6 +233,12 @@ const DetailedReport = () => {
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">BÁO CÁO CHI TIẾT</h2>
         <div className="flex space-x-2">
+          <button
+            onClick={handleAddClick}
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
+          >
+            THÊM NGƯỜI DÙNG
+          </button>
           <button className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition-colors">
             IMPORT
           </button>
@@ -212,9 +272,15 @@ const DetailedReport = () => {
       )}
 
       {/* Modal chỉnh sửa */}
-      {isModalOpen && (
+      {isEditModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md transform transition-transform duration-300 scale-95">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md transform transition-transform duration-300 scale-95 relative">
+            <button
+              onClick={handleModalClose}
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+            >
+              ✕
+            </button>
             <h3 className="text-lg font-bold mb-4">Chỉnh sửa thông tin</h3>
             <div className="space-y-4">
               <div>
@@ -279,8 +345,92 @@ const DetailedReport = () => {
                 Hủy
               </button>
               <button
-                onClick={handleSave}
+                onClick={handleEditSave}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+              >
+                Lưu
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal thêm người dùng */}
+      {isAddModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md transform transition-transform duration-300 scale-95 relative">
+            <button
+              onClick={handleModalClose}
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+            >
+              ✕
+            </button>
+            <h3 className="text-lg font-bold mb-4">Thêm người dùng mới</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Tên khách hàng</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Công ty</label>
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Giá trị đơn hàng</label>
+                <input
+                  type="number"
+                  name="value"
+                  value={formData.value}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Ngày đặt hàng</label>
+                <input
+                  type="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Trạng thái</label>
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                >
+                  <option value="New">Mới</option>
+                  <option value="In-progress">Đang xử lý</option>
+                  <option value="Completed">Hoàn thành</option>
+                </select>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end space-x-2">
+              <button
+                onClick={handleModalClose}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition-colors"
+              >
+                Hủy
+              </button>
+              <button
+                onClick={handleAddSave}
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
               >
                 Lưu
               </button>
