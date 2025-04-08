@@ -1,14 +1,14 @@
-// src/App.jsx
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Sidebar from './pages/Sidebar';
-import Header from './pages/Header';
-import Dashboard from './pages/Dashboard';
-import Projects from './pages/Projects';
-import Teams from './pages/Teams';
-import Analytics from './pages/Analytics';
-import Messages from './pages/Messages';
-import Integrations from './pages/Integrations';
+import Sidebar from './components/Sidebar';
+import Header from './components/Header';
+import Dashboard from './components/Dashboard';
+import Projects from './components/Projects';
+import Teams from './components/Teams';
+import Analytics from './components/Analytics';
+import Messages from './components/Messages';
+import Integrations from './components/Integrations';
 
 const App = () => {
   return (

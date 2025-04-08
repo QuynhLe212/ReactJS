@@ -1,4 +1,4 @@
-
+// src/components/Teams.jsx
 import React from 'react';
 
 const Teams = () => {

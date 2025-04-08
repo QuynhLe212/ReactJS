@@ -1,4 +1,4 @@
-
+// src/components/Projects.jsx
 import React from 'react';
 
 const Projects = () => {

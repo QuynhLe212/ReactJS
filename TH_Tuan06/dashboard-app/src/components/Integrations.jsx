@@ -1,4 +1,4 @@
-
+// src/components/Integrations.jsx
 import React from 'react';
 
 const Integrations = () => {
