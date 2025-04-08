@@ -18,6 +18,7 @@ const DetailedReport = () => {
     status: '',
   });
 
+  // Lấy dữ liệu ban đầu cho bảng
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,20 +35,29 @@ const DetailedReport = () => {
     fetchData();
   }, []);
 
-  const handleEditClick = (row) => {
-    // Chuyển định dạng ngày từ DD/MM/YYYY sang YYYY-MM-DD để dùng với input type="date"
-    const [day, month, year] = row.date.split('/');
-    const formattedDate = `${year}-${month}-${day}`;
-    
-    setSelectedRow(row);
-    setFormData({
-      name: row.name,
-      company: row.company,
-      value: row.value,
-      date: formattedDate, // Định dạng YYYY-MM-DD
-      status: row.status,
-    });
-    setIsModalOpen(true);
+  // Xử lý khi nhấn nút chỉnh sửa: Gọi API GET để lấy dữ liệu chi tiết
+  const handleEditClick = async (row) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/detailedReport/${row.id}`);
+      const rowData = response.data;
+
+      // Chuyển định dạng ngày từ DD/MM/YYYY sang YYYY-MM-DD để dùng với input type="date"
+      const [day, month, year] = rowData.date.split('/');
+      const formattedDate = `${year}-${month}-${day}`;
+
+      setSelectedRow(rowData);
+      setFormData({
+        name: rowData.name,
+        company: rowData.company,
+        value: rowData.value,
+        date: formattedDate,
+        status: rowData.status,
+      });
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error('Lỗi khi lấy dữ liệu chi tiết:', error);
+      alert('Không thể lấy dữ liệu chi tiết. Vui lòng thử lại.');
+    }
   };
 
   const handleModalClose = () => {
@@ -70,18 +80,36 @@ const DetailedReport = () => {
     }));
   };
 
-  const handleSave = () => {
-    // Chuyển định dạng ngày từ YYYY-MM-DD về DD/MM/YYYY để lưu vào data
-    const [year, month, day] = formData.date.split('-');
-    const formattedDate = `${day}/${month}/${year}`;
+  // Xử lý khi nhấn "Lưu": Gọi API PUT để cập nhật dữ liệu
+  const handleSave = async () => {
+    try {
+      // Chuyển định dạng ngày từ YYYY-MM-DD về DD/MM/YYYY để lưu vào API
+      const [year, month, day] = formData.date.split('-');
+      const formattedDate = `${day}/${month}/${year}`;
 
-    const updatedData = data.map((item) =>
-      item.id === selectedRow.id
-        ? { ...item, ...formData, date: formattedDate }
-        : item
-    );
-    setData(updatedData);
-    handleModalClose();
+      const updatedRow = {
+        ...selectedRow,
+        name: formData.name,
+        company: formData.company,
+        value: parseInt(formData.value), // Đảm bảo giá trị là số
+        date: formattedDate,
+        status: formData.status,
+      };
+
+      // Gửi yêu cầu PUT để cập nhật dữ liệu trên server
+      await axios.put(`http://localhost:3001/detailedReport/${selectedRow.id}`, updatedRow);
+
+      // Cập nhật dữ liệu trong state để bảng hiển thị ngay lập tức
+      const updatedData = data.map((item) =>
+        item.id === selectedRow.id ? updatedRow : item
+      );
+      setData(updatedData);
+
+      handleModalClose();
+    } catch (error) {
+      console.error('Lỗi khi cập nhật dữ liệu:', error);
+      alert('Không thể cập nhật dữ liệu. Vui lòng thử lại.');
+    }
   };
 
   const columns = [
