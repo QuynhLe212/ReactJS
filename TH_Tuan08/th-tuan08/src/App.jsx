@@ -11,12 +11,15 @@ import ShoppingCart from './components/cart'
 import ShoppingCartRedux from './components/cart_redux'
 import ShoppingCartReduxToolkit from './components/cart_reduxToolkit'
 import Login from './components/login'
+import AuthRedux from './components/auth_redux'
 
 function App() {
   return (
     <ReduxToolkitThemeProvider>
       <div className="App">
         <ToggleReduxToolkit />
+        <div style={{ margin: '2rem 0' }}></div>
+        <AuthRedux />
         <div style={{ margin: '2rem 0' }}></div>
         <Login />
         <div style={{ margin: '2rem 0' }}></div>

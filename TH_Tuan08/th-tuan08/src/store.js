@@ -7,6 +7,7 @@ import { themeSlice } from './components/toggle_redux';
 import { themeToolkitSlice } from './components/toggle_reduxToolkit';
 import { cartSlice } from './components/cart_redux';
 import { cartToolkitSlice } from './components/cart_reduxToolkit';
+import { authReduxSlice } from './components/auth_redux';
 
 // Configure the Redux store
 export const store = configureStore({
@@ -19,5 +20,6 @@ export const store = configureStore({
     themeToolkit: themeToolkitSlice.reducer,
     cart: cartSlice.reducer,
     cartToolkit: cartToolkitSlice.reducer,
+    authRedux: authReduxSlice.reducer,
   },
 });
