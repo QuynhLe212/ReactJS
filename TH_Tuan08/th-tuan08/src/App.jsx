@@ -10,12 +10,15 @@ import ToggleReduxToolkit, { ReduxToolkitThemeProvider } from './components/togg
 import ShoppingCart from './components/cart'
 import ShoppingCartRedux from './components/cart_redux'
 import ShoppingCartReduxToolkit from './components/cart_reduxToolkit'
+import Login from './components/login'
 
 function App() {
   return (
     <ReduxToolkitThemeProvider>
       <div className="App">
         <ToggleReduxToolkit />
+        <div style={{ margin: '2rem 0' }}></div>
+        <Login />
         <div style={{ margin: '2rem 0' }}></div>
         <ShoppingCartReduxToolkit />
         <div style={{ margin: '2rem 0' }}></div>
