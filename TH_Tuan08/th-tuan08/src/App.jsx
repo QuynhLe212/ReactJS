@@ -7,12 +7,15 @@ import TodoListReduxToolkit from './components/todo_reduxToolkit'
 import ToggleTheme, { ThemeProvider } from './components/toggle_theme'
 import ToggleRedux, { ReduxThemeProvider } from './components/toggle_redux'
 import ToggleReduxToolkit, { ReduxToolkitThemeProvider } from './components/toggle_reduxToolkit'
+import ShoppingCart from './components/cart'
 
 function App() {
   return (
     <ReduxToolkitThemeProvider>
       <div className="App">
         <ToggleReduxToolkit />
+        <div style={{ margin: '2rem 0' }}></div>
+        <ShoppingCart />
         <div style={{ margin: '2rem 0' }}></div>
         <TodoListReduxToolkit />
         <div style={{ margin: '2rem 0' }}></div>
