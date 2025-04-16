@@ -6,12 +6,13 @@ import TodoListRedux from './components/todo_redux'
 import TodoListReduxToolkit from './components/todo_reduxToolkit'
 import ToggleTheme, { ThemeProvider } from './components/toggle_theme'
 import ToggleRedux, { ReduxThemeProvider } from './components/toggle_redux'
+import ToggleReduxToolkit, { ReduxToolkitThemeProvider } from './components/toggle_reduxToolkit'
 
 function App() {
   return (
-    <ReduxThemeProvider>
+    <ReduxToolkitThemeProvider>
       <div className="App">
-        <ToggleRedux />
+        <ToggleReduxToolkit />
         <div style={{ margin: '2rem 0' }}></div>
         <TodoListReduxToolkit />
         <div style={{ margin: '2rem 0' }}></div>
@@ -19,7 +20,7 @@ function App() {
         <div style={{ margin: '2rem 0' }}></div>
         <CounterReduxToolkit />
       </div>
-    </ReduxThemeProvider>
+    </ReduxToolkitThemeProvider>
   )
 }
 
