@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -175,4 +175,103 @@
   text-align: center;
   color: #888;
   padding: 1rem 0;
+}
+
+/* Theme Toggle Styles */
+.theme-container {
+  transition: background-color 0.3s, color 0.3s;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.theme-container.light {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.theme-container.dark {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+}
+
+.theme-toggle-container {
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto 2rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.light .theme-toggle-container {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.dark .theme-toggle-container {
+  background-color: #333;
+  color: #f8f9fa;
+}
+
+.current-theme {
+  margin: 1rem 0;
+  font-size: 1.1rem;
+}
+
+.theme-value {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.theme-toggle-btn {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.light-btn {
+  background-color: #4a6fa5;
+  color: white;
+}
+
+.dark-btn {
+  background-color: #f39c12;
+  color: white;
+}
+
+.light-btn:hover {
+  background-color: #3a5a80;
+}
+
+.dark-btn:hover {
+  background-color: #e67e22;
+}
+
+/* Dark mode styles for other components */
+.dark .counter-container,
+.dark .todo-container {
+  background-color: #333;
+  color: #f8f9fa;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .todo-item {
+  background-color: #444;
+  color: #f0f0f0;
+}
+
+.dark .todo-input {
+  background-color: #444;
+  color: #f0f0f0;
+  border-color: #555;
+}
+
+.dark .todo-text.completed {
+  color: #aaa;
 }
