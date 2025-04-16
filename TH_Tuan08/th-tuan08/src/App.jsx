@@ -3,6 +3,7 @@ import CounterRedux from './components/counter_redux'
 import CounterReduxToolkit from './components/counter_reduxToolkit'
 import TodoList from './components/todo'
 import TodoListRedux from './components/todo_redux'
+import TodoListReduxToolkit from './components/todo_reduxToolkit'
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
       <div style={{ margin: '2rem 0' }}></div> */}
       {/* <TodoList />
       <div style={{ margin: '2rem 0' }}></div> */}
-      <TodoListRedux />
+      {/* <TodoListRedux />
+      <div style={{ margin: '2rem 0' }}></div> */}
+      <TodoListReduxToolkit />
     </div>
   )
 }
