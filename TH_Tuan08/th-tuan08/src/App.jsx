@@ -8,12 +8,15 @@ import ToggleTheme, { ThemeProvider } from './components/toggle_theme'
 import ToggleRedux, { ReduxThemeProvider } from './components/toggle_redux'
 import ToggleReduxToolkit, { ReduxToolkitThemeProvider } from './components/toggle_reduxToolkit'
 import ShoppingCart from './components/cart'
+import ShoppingCartRedux from './components/cart_redux'
 
 function App() {
   return (
     <ReduxToolkitThemeProvider>
       <div className="App">
         <ToggleReduxToolkit />
+        <div style={{ margin: '2rem 0' }}></div>
+        <ShoppingCartRedux />
         <div style={{ margin: '2rem 0' }}></div>
         <ShoppingCart />
         <div style={{ margin: '2rem 0' }}></div>

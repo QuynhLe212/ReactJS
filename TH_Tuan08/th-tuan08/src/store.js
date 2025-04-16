@@ -5,6 +5,7 @@ import { todoSlice } from './components/todo_redux';
 import { todoToolkitSlice } from './components/todo_reduxToolkit';
 import { themeSlice } from './components/toggle_redux';
 import { themeToolkitSlice } from './components/toggle_reduxToolkit';
+import { cartSlice } from './components/cart_redux';
 
 // Configure the Redux store
 export const store = configureStore({
@@ -15,5 +16,6 @@ export const store = configureStore({
     todoToolkit: todoToolkitSlice.reducer,
     theme: themeSlice.reducer,
     themeToolkit: themeToolkitSlice.reducer,
+    cart: cartSlice.reducer,
   },
 });
